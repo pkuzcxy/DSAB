@@ -25,7 +25,7 @@ HOW TO USE:
 /*
 DSAB-builtin hashTable type:cuckoo_hashtable\
 HOW TO USE:
-define: cuckoo::CuckooHashing<key_len, capacity> ht;
+define: cuckoo::CuckooHashing<key_len> ht;
 !!!MUST init: ht.init(capacity)
 bool insert(uint8_t * key, uint32_t val, int from_k = -1, int remained = 5)
 bool query(uint8_t * key, uint32_t & val)
