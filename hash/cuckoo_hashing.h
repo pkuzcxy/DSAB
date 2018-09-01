@@ -1,5 +1,5 @@
-#ifndef STREAMMEASUREMENTSYSTEM_CUCKOO_HASHING_H
-#define STREAMMEASUREMENTSYSTEM_CUCKOO_HASHING_H
+#ifndef CUCKOO_HASHING_H
+#define CUCKOO_HASHING_H
 
 #include <cstdio>
 #include <cstdlib>
@@ -9,7 +9,7 @@
 #include "BOBHash32.h"
 
 namespace cuckoo {
-template<uint32_t keylen, int capacity, int d = 4>
+template<uint32_t keylen, int d = 4>
 class CuckooHashing
 {
     struct KVPair
@@ -50,8 +50,8 @@ class CuckooHashing
         }
     };
 
-    constexpr static uint32_t w = capacity / d;
-    KVPair buckets[w][d];
+    constexpr static uint32_t w;
+    KVPair** buckets;
     BOBHash32 * hashs[2];
 
 public:
@@ -66,7 +66,16 @@ public:
         hashs[0] = new BOBHash32(uint32_t(seed_a));
         hashs[1] = new BOBHash32(uint32_t(seed_b));
     }
-
+	void init(int capacity)
+	{
+		w = capacity / d;
+		buckets = new KVPair*[w];
+		for (int  i = 0; i < w; i++)
+		{
+			buckets[i] = new KVPair[d];
+			memset(buckets[i], 0, sizeof(KVPair)*d);
+		}
+	}
     bool insert(uint8_t * key, uint32_t val, int from_k = -1, int remained = 5)
     {
         if (remained == 0)
@@ -164,8 +173,12 @@ public:
         for (int i = 0; i < 2; ++i) {
             delete hashs[i];
         }
+		for (int i = 0; i < w; ++i) {
+			delete buckets[i];
+		}
+		delete [] buckets;
     }
 };
 }
 
-#endif //STREAMMEASUREMENTSYSTEM_CUCKOO_HASHING_H
+#endif //CUCKOO_HASHING_H
