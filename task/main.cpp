@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
         while (dat.GetNext(str))
         {
             v.push_back(string(str, bytesPerStr));
-
+            cout<<string(str, bytesPerStr)<<endl;
 
             ++item2freq[string(str, bytesPerStr)];
 
