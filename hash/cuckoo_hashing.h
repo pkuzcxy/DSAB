@@ -50,7 +50,7 @@ class CuckooHashing
         }
     };
 
-    constexpr static uint32_t w;
+    uint32_t w;
     KVPair** buckets;
     BOBHash32 * hashs[2];
 

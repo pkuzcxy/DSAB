@@ -49,8 +49,8 @@ virtual void reset() = 0;//reset sketch to the initial state
 
 class YourSketchName: public SketchBase {
 private:
+	/*----optional according to your need----*/
     BOBHash *hash;//optional DSAB-builtin hashfunction
-    /*----optional according to your need----*/
     int hash_num;
     int counter_per_array;
     int bit_per_counter;
