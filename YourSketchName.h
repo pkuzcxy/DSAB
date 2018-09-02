@@ -1,5 +1,5 @@
-#ifndef YOURSKETCHNAME_H //must change this MACRO
-#define YOURSKETCHNAME_H //must change this MACRO
+#ifndef YourSketchName_H //must change this MACRO
+#define YourSketchName_H //must change this MACRO
 #include "SketchBase.h" //DO NOT change this include
 #include "factor.h"//DO NOT change this include
 #include "../hash/hashfunction.h"//If you want to use DSAB-builtin hashfunction must include this
@@ -145,7 +145,7 @@ public:
         }
         /*----optional according to your need----*/
     }
-    ~CmSketch()
+    ~YourSketchName()
     {
         /*MUST have this function */
 
