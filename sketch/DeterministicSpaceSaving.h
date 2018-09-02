@@ -21,9 +21,9 @@
 /*
 DSAB-builtin hashfunction type:BOBHash\
 HOW TO USE:
-    define: e.g. BOBHash myhash
-    setseed: e.g. myhash.SetSeed(1001)
-    calculate hash: e.g. myhash.Run(const char *str, const int & len)
+define: e.g. BOBHash myhash
+setseed: e.g. myhash.SetSeed(1001)
+calculate hash: e.g. myhash.Run(const char *str, const int & len)
 */
 /*----builtin hashfunction----*/
 
@@ -51,7 +51,7 @@ virtual vector<string>  topkQuery(const int & k) = 0;
 virtual void reset() = 0;//reset sketch to the initial state
 */
 /*----SketchBase virtual function must be finished----*/
-
+template<int keylen> struct KeyNode;
 template<int keylen>
 struct ValueNode
 {
@@ -69,7 +69,7 @@ struct KeyNode
 	KeyNode<keylen> * next = NULL;
 	char key[keylen];
 };
-class DeterministicSpacceSaving: public SketchBase {
+class DeterministicSpacceSaving : public SketchBase {
 private:
 	/*----optional according to your need----*/
 	uint32_t mem_in_bytes;
@@ -89,7 +89,7 @@ private:
 	SSValNode * tail_node;
 
 	unordered_map<string, SSKeyNode *> hash_table;
-    /*----optional according to your need----*/
+	/*----optional according to your need----*/
 	void append_new_key(const char * key) {
 		// exact first key in tail node
 		SSKeyNode * victim = tail_node->first;
@@ -162,30 +162,30 @@ private:
 		}
 	}
 public:
-    using SketchBase::sketch_name;//DO NOT change this declaration
-    DeterministicSpacceSaving()
-    {
-        /*constructed function MUST BT non-parameter!!!*/
-        sketch_name =  "DeterministicSpacceSaving";//please keep sketch_name the same as class name and .h file name
-    }
-    void parameterSet(const std::string& parameterName, double  parameterValue)
-    {
-        /*MUST have this function even empty function body*/
+	using SketchBase::sketch_name;//DO NOT change this declaration
+	DeterministicSpacceSaving()
+	{
+		/*constructed function MUST BT non-parameter!!!*/
+		sketch_name = "DeterministicSpacceSaving";//please keep sketch_name the same as class name and .h file name
+	}
+	void parameterSet(const std::string& parameterName, double  parameterValue)
+	{
+		/*MUST have this function even empty function body*/
 
-        /*----optional according to your need----*/
-        if (parameterName=="mem_in_bytes")
-        {
+		/*----optional according to your need----*/
+		if (parameterName == "mem_in_bytes")
+		{
 
-           mem_in_bytes = parameterValue;
-            return;
-        }
-        /*----optional according to your need----*/
-    }
-    void init()
-    {
-        /*MUST have this function even empty function body*/
+			mem_in_bytes = parameterValue;
+			return;
+		}
+		/*----optional according to your need----*/
+	}
+	void init()
+	{
+		/*MUST have this function even empty function body*/
 
-        /*----optional according to your need----*/
+		/*----optional according to your need----*/
 		capacity = mem_in_bytes / bytes_per_item;
 		key_nodes = new SSKeyNode[capacity];
 		val_nodes = new SSValNode[capacity];
@@ -207,15 +207,15 @@ public:
 		}
 
 		hash_table.reserve(10 * capacity);
-        /*----optional according to your need----*/
-    }
-    void Insert(const char *str, const int & len)
-    {
-        /*MUST have this function DO NOT change parameter type*/
+		/*----optional according to your need----*/
+	}
+	void Insert(const char *str, const int & len)
+	{
+		/*MUST have this function DO NOT change parameter type*/
 
-        /*----optional according to your need----*/
+		/*----optional according to your need----*/
 		auto itr = hash_table.find(string(str, len));
-		if (itr == hash_table.end()) 
+		if (itr == hash_table.end())
 		{
 			// key not found
 			append_new_key(key);
@@ -225,22 +225,22 @@ public:
 			// key found
 			add_counter(itr->second);
 		}
-        /*----optional according to your need----*/
-    }
-    int frequencyQuery(const char *str, const int & len)
-    {
-         /*MUST have this function DO NOT change function head and parameter type */
+		/*----optional according to your need----*/
+	}
+	int frequencyQuery(const char *str, const int & len)
+	{
+		/*MUST have this function DO NOT change function head and parameter type */
 
-        /*----optional according to your need----*/
+		/*----optional according to your need----*/
 		return 0;
-        /*----optional according to your need----*/
-    }
-    vector<string>  topkQuery(const int & k)
-    {
-        /*MUST have this function DO NOT change function head and parameter type */
+		/*----optional according to your need----*/
+	}
+	vector<string>  topkQuery(const int & k)
+	{
+		/*MUST have this function DO NOT change function head and parameter type */
 
-        /*----optional according to your need----*/
-        vector<string> topkItem;
+		/*----optional according to your need----*/
+		vector<string> topkItem;
 
 		SSValNode * p = tail_node;
 
@@ -260,14 +260,14 @@ public:
 			} while (v != p->first);
 		}
 
-        return topkItem;
-        /*----optional according to your need----*/
-    }
-    void reset()
-    {
-         /*MUST have this function,reset sketch to the initial state */
+		return topkItem;
+		/*----optional according to your need----*/
+	}
+	void reset()
+	{
+		/*MUST have this function,reset sketch to the initial state */
 
-        /*----optional according to your need----*/
+		/*----optional according to your need----*/
 		capacity = mem_in_bytes / bytes_per_item;
 		key_nodes = new SSKeyNode[capacity];
 		val_nodes = new SSValNode[capacity];
@@ -289,20 +289,20 @@ public:
 		}
 		hash_table.clear();
 		hash_table.reserve(10 * capacity);
-        /*----optional according to your need----*/
-    }
-    ~DeterminsticSpaceSaving()
-    {
-        /*MUST have this function */
+		/*----optional according to your need----*/
+	}
+	~DeterministicSpaceSaving()
+	{
+		/*MUST have this function */
 
-        /*----optional according to your need----*/
-		delete [] key_nodes;
-		delete [] val_nodes;
-		delete [] val_node_pool;
-        /*----optional according to your need----*/
-    }
+		/*----optional according to your need----*/
+		delete[] key_nodes;
+		delete[] val_nodes;
+		delete[] val_node_pool;
+		/*----optional according to your need----*/
+	}
 
-    /*----optional You can add your function----*/
+	/*----optional You can add your function----*/
 };
-REGISTER(DeterminsticSpaceSaving);
+REGISTER(DeterministicSpaceSaving);
 #endif//DO NOT change this file
