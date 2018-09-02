@@ -3,4 +3,5 @@
 #include "../sketch/CmSketch.h"
 #include "../sketch/CountHeap.h"
 #include "../sketch/CountMinHeap.h"
+#include "../sketch/DeterministicSpaceSaving.h"
 #endif

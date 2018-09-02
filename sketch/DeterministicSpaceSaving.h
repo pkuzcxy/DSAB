@@ -69,7 +69,7 @@ struct KeyNode
 	KeyNode<keylen> * next = NULL;
 	char key[keylen];
 };
-class DeterministicSpacceSaving : public SketchBase {
+class DeterministicSpaceSaving : public SketchBase {
 private:
 	/*----optional according to your need----*/
 	uint32_t mem_in_bytes;
@@ -163,7 +163,7 @@ private:
 	}
 public:
 	using SketchBase::sketch_name;//DO NOT change this declaration
-	DeterministicSpacceSaving()
+	DeterministicSpaceSaving()
 	{
 		/*constructed function MUST BT non-parameter!!!*/
 		sketch_name = "DeterministicSpacceSaving";//please keep sketch_name the same as class name and .h file name
@@ -191,7 +191,7 @@ public:
 		val_nodes = new SSValNode[capacity];
 		val_node_pool = new SSValNode*[capacity];
 		memset(key_nodes, 0, sizeof(SSKeyNode)*capacity);
-		memset(val_nodes, 0, sizeof(SSValNode)*capacity)
+        memset(val_nodes, 0, sizeof(SSValNode)*capacity);
 			val_node_empty_cnt = 0;
 		for (int i = 1; i < capacity; ++i) {
 			val_node_pool[val_node_empty_cnt++] = val_nodes + i;
@@ -218,7 +218,7 @@ public:
 		if (itr == hash_table.end())
 		{
 			// key not found
-			append_new_key(key);
+			append_new_key(str);
 		}
 		else
 		{
@@ -255,7 +255,7 @@ public:
 				//result[i++].second = p->val;
 				v = v->next;
 				if (i == k) {
-					return;
+					return topkItem;
 				}
 			} while (v != p->first);
 		}
@@ -273,7 +273,7 @@ public:
 		val_nodes = new SSValNode[capacity];
 		val_node_pool = new SSValNode*[capacity];
 		memset(key_nodes, 0, sizeof(SSKeyNode)*capacity);
-		memset(val_nodes, 0, sizeof(SSValNode)*capacity)
+        memset(val_nodes, 0, sizeof(SSValNode)*capacity);
 			val_node_empty_cnt = 0;
 		for (int i = 1; i < capacity; ++i) {
 			val_node_pool[val_node_empty_cnt++] = val_nodes + i;
