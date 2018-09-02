@@ -27,20 +27,20 @@ DSAB-builtin hashTable type:cuckoo_hashtable\
 HOW TO USE:
 define: cuckoo::CuckooHashing<key_len> ht;
 !!!MUST init: ht.init(capacity)
-bool insert(uint8_t * key, uint32_t val, int from_k = -1, int remained = 5)
-bool query(uint8_t * key, uint32_t & val)
-bool find(uint8_t * key)
-bool erase(uint8_t * key)
+bool insert(char * key, uint32_t val, int from_k = -1, int remained = 5)
+bool query(char * key, uint32_t & val)
+bool find(char * key)
+bool erase(char * key)
 */
 /*----builtin hashTable----*/
 
 /*----SketchBase virtual function must be finished----*/
 /*
 virtual ~SketchBase();
-virtual void parameterSet(const string& parameterName, double & parameterValue)=0;
+virtual void parameterSet(const string& parameterName, double  parameterValue)=0;
 virtual init() = 0;
-virtual void Insert(const char *str, const int & len) = 0;
-virtual int frequencyQuery(const char *str, const int & len) = 0;
+virtual void Insert(const uint8_t *str, const int & len) = 0;
+virtual int frequencyQuery(const uint8_t *str, const int & len) = 0;
 virtual vector<string>  topkQuery(const int & k) = 0;
 virtual void reset() = 0;//reset sketch to the initial state
 */
@@ -63,7 +63,7 @@ public:
         /*constructed function MUST BT non-parameter!!!*/
         sketch_name =  "YourSketchName";//please keep sketch_name the same as class name and .h file name
     }
-    void parameterSet(const std::string& parameterName, double & parameterValue)
+    void parameterSet(const std::string& parameterName, double  parameterValue)
     {
         /*MUST have this function even empty function body*/
 
@@ -108,7 +108,7 @@ public:
         /*----optional according to your need----*/
         for (int i = 0; i < hash_num; ++i)
         {
-            ++data[i][hash[i].Run(str, len) % counter_per_array];
+            ++data[i][hash[i].Run((char *)str, len) % counter_per_array];
         }
         /*----optional according to your need----*/
     }
@@ -117,9 +117,9 @@ public:
          /*MUST have this function DO NOT change function head and parameter type */
 
         /*----optional according to your need----*/
-        int res = data[0][hash[i].Run(str, len) % counter_per_array];
+        int res = data[0][hash[i].Run((char *)str, len) % counter_per_array];
         for (int i = 1; i < hash_num; ++i) {
-            int t = data[i][hash[i].Run(str, len) % counter_per_array];
+            int t = data[i][hash[i].Run((char *)str, len) % counter_per_array];
             res = res < t ? res : t;
         }
         return res;

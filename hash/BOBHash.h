@@ -6,7 +6,7 @@
 class BOBHash: public BaseHash<unsigned int, unsigned int> {
 public:
     BOBHash(const unsigned int _seed = 1000);
-    unsigned int Run(const char* str, unsigned int len);
+    unsigned int Run(const char * str, unsigned int len);
     inline void SetSeed(const unsigned int _seed);
 private:
     unsigned int seed;

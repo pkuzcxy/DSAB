@@ -14,7 +14,7 @@ class CuckooHashing
 {
     struct KVPair
     {
-        uint8_t key[keylen];
+        char key[keylen];
         uint32_t val;
 
         KVPair()
@@ -38,12 +38,12 @@ class CuckooHashing
             return true;
         }
 
-        bool is_key_match(const uint8_t * n_key)
+        bool is_key_match(const char * n_key)
         {
             return memcmp(key, n_key, keylen) == 0;
         }
 
-        void set(const uint8_t * i_key, uint32_t i_val)
+        void set(const char * i_key, uint32_t i_val)
         {
             memcpy(key, i_key, keylen);
             val = i_val;
@@ -76,13 +76,13 @@ public:
 			memset(buckets[i], 0, sizeof(KVPair)*d);
 		}
 	}
-    bool insert(uint8_t * key, uint32_t val, int from_k = -1, int remained = 5)
+    bool insert(const char * key, uint32_t val, int from_k = -1, int remained = 5)
     {
         if (remained == 0)
             return false;
         uint32_t hv[2];
         for (int k = 0; k < 2; ++k) {
-            hv[k] = hashs[k]->run((const char *)key, keylen) % w;
+            hv[k] = hashs[k]->run(key, keylen) % w;
             if (k == from_k)
                 continue;
             for (int i = 0; i < d; ++i) {
@@ -110,11 +110,11 @@ public:
         return false;
     }
 
-    uint32_t & operator[](uint8_t * key)
+    uint32_t & operator[](const char * key)
     {
         uint32_t hv[2];
         for (int k = 0; k < 2; ++k) {
-            hv[k] = hashs[k]->run((const char *)key, keylen) % w;
+            hv[k] = hashs[k]->run(key, keylen) % w;
             for (int i = 0; i < d; ++i) {
                 if (buckets[hv[k]][i].is_key_match(key)) {
                     return buckets[hv[k]][i].val;
@@ -130,11 +130,11 @@ public:
         return (*this)[key];
     }
 
-    bool query(uint8_t * key, uint32_t & val)
+    bool query(const char * key, uint32_t & val)
     {
         uint32_t hv[2];
         for (int k = 0; k < 2; ++k) {
-            hv[k] = hashs[k]->run((const char *)key, keylen) % w;
+            hv[k] = hashs[k]->run(key, keylen) % w;
             for (int i = 0; i < d; ++i) {
                 if (buckets[hv[k]][i].is_key_match(key)) {
                     val = buckets[hv[k]][i].val;
@@ -146,17 +146,17 @@ public:
         return false;
     }
 
-    bool find(uint8_t * key)
+    bool find(const char * key)
     {
         uint32_t val;
         return query(key, val);
     }
 
-    bool erase(uint8_t * key)
+    bool erase(const char * key)
     {
         uint32_t hv[2];
         for (int k = 0; k < 2; ++k) {
-            hv[k] = hashs[k]->run((const char *)key, keylen) % w;
+            hv[k] = hashs[k]->run(key, keylen) % w;
             for (int i = 0; i < d; ++i) {
                 if (buckets[hv[k]][i].is_key_match(key)) {
                     memset(buckets[hv[k]][i].key, 0, keylen);

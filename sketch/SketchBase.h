@@ -7,8 +7,8 @@ class SketchBase
     public:
         std::string sketch_name;// store sketch name
         virtual ~SketchBase(){}
-        virtual void Insert(const char *str, const int & len) = 0;
-        virtual int frequencyQuery(const char *str, const int & len) = 0;
+        virtual void Insert(const char * str, const int & len) = 0;
+        virtual int frequencyQuery(const char * str, const int & len) = 0;
         virtual std::vector<std::string> topkQuery(const int & k) = 0;
         virtual void parameterSet(const std::string& parameterName, double  parameterValue)=0;
         virtual void init() = 0;

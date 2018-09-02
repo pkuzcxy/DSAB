@@ -10,7 +10,7 @@
 int is type of frequencyQuery Return
 hashfunction type:BOBHash\
 virtual ~SketchBase() = 0;
-virtual void parameterSet(const string& parameterName, double & parameterValue)=0;
+virtual void parameterSet(const string& parameterName, double  parameterValue)=0;
 virtual init() = 0;
 virtual void Insert(const char *str, const int & len) = 0;
 virtual int frequencyQuery(const char *str, const int & len) = 0;

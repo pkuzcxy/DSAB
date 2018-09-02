@@ -1,2 +1,2 @@
 sketch=CmSketch
-
+dataset=kosarak.dat
