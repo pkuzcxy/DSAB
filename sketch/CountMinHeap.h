@@ -53,7 +53,7 @@ virtual void reset() = 0;//reset sketch to the initial state
 /*----SketchBase virtual function must be finished----*/
 
 bool cmp(const pair<string, uint32_t> a, const pair<string, uint32_t> b) {
-	return a.second > b.second;//自定义的比较函数
+	return a.second > b.second;
 }
 class CountMinHeap : public SketchBase {
 private:
