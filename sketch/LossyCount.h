@@ -28,7 +28,7 @@ typedef struct LC_type
 	int epoch;
 } LC_type;
 
-bool cmp(const pair<string, uint32_t> a, const pair<string, uint32_t> b) {
+bool LossyCountcmp(const pair<string, uint32_t> a, const pair<string, uint32_t> b) {
 	return a.second > b.second;
 }
 /*----optional according to your need----*/
@@ -73,7 +73,7 @@ class LossyCount: public SketchBase {
 private:
 	/*----optional according to your need----*/
 	LC_type * result;
-	double * phi;
+	double phi;
     /*----optional according to your need----*/
 	void countershell(unsigned long n, Counter a[])
 	{
@@ -278,17 +278,17 @@ public:
 		countershell(result->buckets, result->bucket);
 		result->holdersize = countermerge(result->newcount, result->bucket, result->holder,
 			result->buckets, result->holdersize, result->maxholder);
-		tmp = result->newcount;
+		auto swap_tmp = result->newcount;
 		result->newcount = result->holder;
-		result->holder = tmp;
+		result->holder = swap_tmp;
 		result->buckets = 0;
 		vector<pair<string, uint32_t> >tmp;
-		for (i = 0; i<lc->holdersize; i++)
+		for (i = 0; i<result->holdersize; i++)
 		{
-			tmp.emplace_back(make_pair(lc->holder[i].item, lc->holder[i].count + lc->epoch));
+			tmp.emplace_back(make_pair(result->holder[i].item, result->holder[i].count + result->epoch));
 		}
-		sort(tmp.begin(), tmp.end(), cmp);
-		for (int i = 0; i < min(k,lc->holdersize); i++)
+		sort(tmp.begin(), tmp.end(),LossyCountcmp);
+		for (int i = 0; i < min(k,result->holdersize); i++)
 		{
 			topkItem.push_back(tmp[i].first);
 		}

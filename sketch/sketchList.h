@@ -4,4 +4,5 @@
 #include "../sketch/CountHeap.h"
 #include "../sketch/CountMinHeap.h"
 #include "../sketch/DeterministicSpaceSaving.h"
+#include "../sketch/LossyCount.h"
 #endif

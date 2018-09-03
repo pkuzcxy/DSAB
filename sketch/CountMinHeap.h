@@ -52,7 +52,7 @@ virtual void reset() = 0;//reset sketch to the initial state
 */
 /*----SketchBase virtual function must be finished----*/
 
-bool cmp(const pair<string, uint32_t> a, const pair<string, uint32_t> b) {
+bool CMHcmp(const pair<string, uint32_t> a, const pair<string, uint32_t> b) {
 	return a.second > b.second;
 }
 class CountMinHeap : public SketchBase {
@@ -217,7 +217,7 @@ public:
 		for (int i = 0; i < capacity; ++i) {
 				tmp.emplace_back(make_pair(heap[i].first, heap[i].second));
 		}
-		sort(tmp.begin(), tmp.end(), cmp);
+		sort(tmp.begin(), tmp.end(), CMHcmp);
 		for (int i = 0; i < k; ++i)
 		{
 			topkItem.push_back(tmp[i].first);
