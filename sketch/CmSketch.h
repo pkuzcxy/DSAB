@@ -81,7 +81,7 @@ public:
     }
 	std::vector<std::pair <std::string, int> > topkQuery(const int & k)
     {
-       vector<string> topkItem;
+	   std::vector<std::pair <std::string, int> >  topkItem;
        return topkItem;
     }
     void reset()
