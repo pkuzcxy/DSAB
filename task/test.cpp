@@ -23,13 +23,13 @@ void topkTest(vector<string> & v,vector<itemType> & frequentItem,int k,SketchBas
         sketch.Insert(iter->c_str(), bytesPerStr);
 
     /*accuracy test*/
-    vector<string> queryResult = sketch.topkQuery(k);
+	std::vector<std::pair <std::string, int> > queryResult = sketch.topkQuery(k);
     ofstream topk_file;
     topk_file.open("./result/"+topk_file_name);
     topk_file<<"True "<< "Report"<<endl;
     for(int i =0;i<k;++k)
     {
-        topk_file<<frequentItem[i].id<<" "<<queryResult[i];
+		topk_file << frequentItem[i].id << "\t" << frequentItem[i].frequency << "\t" << queryResult[i].first << "\t" << queryResult[i].second << endl;
     }
     topk_file.close();
 }

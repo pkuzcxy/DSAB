@@ -10,7 +10,7 @@
 using namespace std;
 bool negative_sort_item(itemType &a, itemType &b)
 {
-    return a.frequency > a.frequency;
+    return a.frequency > b.frequency;
 }
 int main(int argc, char *argv[]) {
     
